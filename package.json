@@ -6,7 +6,11 @@
   "dependencies": {
     "json-server": "^0.15.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "bootstrap": "^4.1.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.16.0"
+  },
   "scripts": {
     "start": "json-server -p 3001 -w db.json"
   },
