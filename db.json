@@ -1,0 +1,12 @@
+{
+  "question": [
+    {
+      "id": 1,
+      "body": "Why is the sky blue?" 
+    },
+    {
+      "id": 2,
+      "body": "Why is the snow white?" 
+    }
+  ]
+}
