@@ -1,14 +1,25 @@
-import React, { Component } from 'react'
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'jquery/dist/jquery.min.js';
+import 'bootstrap/dist/js/bootstrap.min.js';
+import './App.css';
+import { createBrowserHistory } from 'history';
+import {Router,Route} from 'react-router-dom';
+import QuestionPage from './QuestionPage'
 
 
+function App() {
 
+  const history = createBrowserHistory();
+  return (
+    <div className="App">
+      <Router  history={history} > 
+          <Route path="/"  render={(props) => 
+              <QuestionPage {...props} questionCode="First_Ques"  />} />
 
-export default class App extends Component {
-  render() {
-    return (
-      <div>
-        Hello World 
-      </div>
-    )
-  }
+      </Router> 
+    </div>
+  );
 }
+
+export default App;
