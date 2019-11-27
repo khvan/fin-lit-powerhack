@@ -3,36 +3,9 @@ import React, {useState,useEffect}  from 'react';
 const AboutPage = (props) => {
   const [questionCode, setQuestionCode] = useState('');
   const [question, setQuestion] = useState('');
-
-  useEffect(() => {
-    setQuestionCode(props.questionCode);
-    const fetchData = async () => {
-      await fetch(`get questionCode`,{
-          method: 'get',
-          headers: {
-            'Content-Type': 'application/json',
-          }
-    
-      })
-      .then(res => {
-        if( res.status ===200 ) 
-          throw new Error(res);
-        else 
-          return res.json();
-        })
-      .then(
-        (result) => {
-          setQuestion(result.body);
-            console.log('got the info ');
-        })
-        .catch((error) => {
-          console.log('error: ' + error);
-        });
   
-    }
-
-  
-  }, []);
+  var temp = props.questionCode;
+  loadQuestion(props.questionCode);
 
 const loadQuestion = (code)=>{
   setQuestionCode(code);
@@ -45,7 +18,7 @@ const loadQuestion = (code)=>{
   
     })
     .then(res => {
-      if( res.status ===200 ) 
+      if( res.status !==200 ) 
         throw new Error(res);
       else 
         return res.json();
@@ -62,6 +35,10 @@ const loadQuestion = (code)=>{
   }
 
 };
+
+const moveToNextPage = () =>{
+
+}
 
   return (
   <React.Fragment>
@@ -87,7 +64,7 @@ const loadQuestion = (code)=>{
         <button  type="button" onClick={(e) => {e.preventDefault();props.history.goBack();}} className="btn float-left" >Back</button>
       </div>
       <div className="col-6">
-        <button  type="button" onClick={(e) => {e.preventDefault();props.history.goBack();}} className="btn float-right" >Next</button>
+        <button  type="button" onClick={(e) => {e.preventDefault();moveToNextPage();}} className="btn float-right" >Next</button>
       </div>
     </div>
 
