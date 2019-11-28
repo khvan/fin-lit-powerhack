@@ -3,17 +3,32 @@
     {
       "id": 1,
       "body": "Why is the sky blue?" ,
-      "next-id": 2, 
+      "nextId": 2
     },
     {
       "id": 2,
       "body": "Why is the snow white?",
-      "next-id": 3
+      "nextId": 3
     },
     {
       "id": 3,
       "body": "Why is the snow white?", 
-      "next-id": 4
+      "nextId": 4
+    },
+    {
+      "id": 3,
+      "body": "Why is the snow white?", 
+      "nextId": 4
+    },
+    {
+      "id": 3,
+      "body": "Why is the snow white?", 
+      "nextId": 4
+    },
+    {
+      "id": 3,
+      "body": "Why is the snow white?", 
+      "nextId": 4
     }
 
   ]

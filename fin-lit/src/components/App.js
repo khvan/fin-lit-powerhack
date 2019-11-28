@@ -15,7 +15,7 @@ function App() {
     <div className="App">
       <Router  history={history} > 
           <Route path="/"  render={(props) => 
-              <QuestionPage {...props} questionCode="First_Ques"  />} />
+              <QuestionPage {...props} questionCode="1"  />} />
 
       </Router> 
     </div>

@@ -1,182 +1,116 @@
-import React, {useState,useEffect}  from 'react';
+import React, {useState, useEffect} from 'react';
+import Solution from './Solution';
 
-class AboutPage extends React.Component  {
+const QuestionPage = props => {
+  //const [questionCode, setQuestionCode] = useState('');
+  const [question, setQuestion] = useState ('');
+  const [nextCode, setNextCode] = useState ('');
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      items: []
-    };
-  }
+  useEffect (() => {
+    loadQuestion (props.questionCode);
+    console.log (props.questionCode);
+  }, []);
 
-  componentDidMount() {
-    fetch("http://localhost:3001/question")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            items: result.items
-          });
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-  }
+  const loadQuestion = code => {
+    //setQuestionCode(code);
+    console.log ('load question');
+    console.log (code);
+    fetchData (code);
+  };
 
-  render() {
-    const { error, isLoaded, items } = this.state;
-    console.log(items)
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
+  const fetchData = async code => {
+    await fetch (`http://localhost:3001/question/${code}`, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then (res => {
+        console.log (res);
+        if (res.status !== 200) throw new Error (res);
+        else return res.json ();
+      })
+      .then (result => {
+        setQuestion (result.body);
+        setNextCode (result.nextId);
+        console.log (result.nextId);
+        console.log ('got the info ');
+      })
+      .catch (error => {
+        console.log ('error: ' + error);
+      });
+  };
+
+  var temp = props.questionCode;
+
+  const moveToNextPage = () => {
+    if (nextCode !== 4) {
+      loadQuestion (nextCode);
+      console.log ('got the info ');
     } else {
-      return (
-        <ul>
-          {items.map(item => (
-            <li key={item.name}>
-              {item.name} {item.price}
-            </li>
-          ))}
-        </ul>
-      );
+      setQuestion (null);
     }
-  }
-}
+  };
 
+  return (
+    <React.Fragment>
+      <div className="row">
+        <div className="ml-5   mt-2 ">
+          <h3>
+            <span class="badge badge-danger float-left">Finance Planner</span>
+          </h3>
+        </div>
+      </div>
 
+      <div className="container Que-Container mt-5">
 
+        <div className="row ">
+          <div className="container mt-5 col-6 ">
+            <br />
+            <h4>{question === null ? <Solution /> : question} </h4>
+            <br />
+          </div>
+        </div>
+        <div>
+          {question === null? <div> nussing</div> : <div className="row ">
+            <div className="container mt-5 col-6">
+              <div className="form-group">
+                <input className="form-control" type="number" />
+              </div>
+            </div>
+          </div> }
+        </div>
 
+        <div className="row mt-5 pb-2">
+          <div className="col-6">
+            <button
+              type="button"
+              onClick={e => {
+                e.preventDefault ();
+                props.history.goBack ();
+              }}
+              className="btn float-left"
+            >
+              Back
+            </button>
+          </div>
+          <div className="col-6">
+            <button
+              type="button"
+              onClick={e => {
+                e.preventDefault ();
+                moveToNextPage ();
+              }}
+              className="btn float-right"
+            >
+              Next
+            </button>
+          </div>
+        </div>
 
+      </div>
+    </React.Fragment>
+  );
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-//  fetchData = async () => {
-//     await fetch(`http://localhost:3001/question`,{
-//         method: 'get',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         }
-  
-//     })
-//     .then(res => {
-//         return res.json();
-  
-
-//       })
-
-//   }
-
-
-//   render(){
-// return (
-//   <div>
-//     Hello
-//     <h4>{this.fetchData()}</h4>
-//   </div>
-// )
-//   }
-// }
-
-  
-
-
-
-
-
-
-
-
-
-
-
-  
-//   const [questionCode, setQuestionCode] = useState('');
-//   const [question, setQuestion] = useState('');
-//   // loadQuestion(props.questionCode)
-//   const loadQuestion = (code)=>{
-//   setQuestionCode(code);
-
-//   const fetchData = async () => {
-//     await fetch(`http://localhost:3001/question`,{
-//         method: 'get',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         }
-  
-//     })
-//     .then(res => {
-//       console.log("this is our data >>>>>>>>>>>", res.json())
-//       if( res.status ===200 ) 
-//         throw new Error(res);
-//       else 
-//         return res.json();
-//       })
-//     .then(
-//       (result) => {
-//         setQuestion(result.body);
-//           console.log('got the info ');
-//       })
-//       .catch((error) => {
-//         console.log('error: ' + error);
-//       });
-
-//   }
-
-// };
-
-//   return (
-//   <React.Fragment>
-//   <div className="container">
-
-//     <div className="row" >
-//         <div className="container col-6 ">
-//             <br/>
-//         <h4>{fetchData()}</h4>
-//         <br/>
-//         </div>
-//     </div>
-
-//     <div className="row ">
-//       <div className="container col-6">
-//         <h4 >About this App</h4>
-//       </div>
-//     </div>
-
-
-//     <div className="row ">
-//       <div className="col-6">
-//         <button  type="button" onClick={(e) => {e.preventDefault();props.history.goBack();}} className="btn float-left" >Back</button>
-//       </div>
-//       <div className="col-6">
-//         <button  type="button" onClick={(e) => {e.preventDefault();props.history.goBack();}} className="btn float-right" >Next</button>
-//       </div>
-//     </div>
-
-//  </div>
-//   </React.Fragment>
-//   )}
-  
-export default AboutPage; 
-
-
+export default QuestionPage;
