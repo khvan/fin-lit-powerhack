@@ -1,16 +1,24 @@
 import React, {useState,useEffect}  from 'react';
 
-const AboutPage = (props) => {
+const QuestionPage = (props) => {
   const [questionCode, setQuestionCode] = useState('');
-  const [question, setQuestion] = useState('');
+  const [question, setQuestion] = useState('');  
   
-  var temp = props.questionCode;
-  loadQuestion(props.questionCode);
+  
+  useEffect(() => {
+    loadQuestion(props.questionCode);
+    console.log(props.questionCode);
+  }, []);
 
 const loadQuestion = (code)=>{
   setQuestionCode(code);
-  const fetchData = async () => {
-    await fetch(`get questionCode`,{
+  console.log('load question');
+  console.log(code);
+  fetchData(code);
+};
+
+  const fetchData = async (code) => {
+    await fetch(`http://localhost:3001/question/${code}`,{
         method: 'get',
         headers: {
           'Content-Type': 'application/json',
@@ -18,6 +26,7 @@ const loadQuestion = (code)=>{
   
     })
     .then(res => {
+        console.log(res);
       if( res.status !==200 ) 
         throw new Error(res);
       else 
@@ -26,19 +35,23 @@ const loadQuestion = (code)=>{
     .then(
       (result) => {
         setQuestion(result.body);
-          console.log('got the info ');
-      })
+        console.log(result);
+        console.log('got the info ');
+    })
       .catch((error) => {
         console.log('error: ' + error);
       });
 
-  }
+  };
 
-};
+
+
+var temp = props.questionCode;
+
 
 const moveToNextPage = () =>{
-
-}
+    //loadQuestion();
+};
 
   return (
   <React.Fragment>
@@ -72,6 +85,4 @@ const moveToNextPage = () =>{
   </React.Fragment>
   )}
   
-export default AboutPage; 
-
-
+export default QuestionPage; 

@@ -2,11 +2,13 @@
   "question": [
     {
       "id": 1,
-      "body": "Why is the sky blue?" 
+      "body": "Why is the sky blue?" ,
+      "nextId":2
     },
     {
       "id": 2,
-      "body": "Why is the snow white?" 
+      "body": "Why is the snow white?" ,
+      "nextId":3
     }
   ]
 }
